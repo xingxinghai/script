@@ -1,25 +1,46 @@
-toast("远程成功")
-
+--toast("暂未放置任何脚本，请等待作者添加")
+-- 脚本名称:(示例)简单媒体播放器
+-- 脚本描述:演示UI函数和声音播放函数
 ----------------------------------------------------
---<h1><center><font color=red>用doString()调用</font></center></h1>
+toast("远程启动")
 
-function 提示(text)
-toast(text)
+function play()
+UI=getText(DEFAULT_WINDOW_NAME,"U")
+	toast("开始播放"..UI)
+	startMediaPlayer(UI)
+	
+	--脚本精灵内置声音
+	--toast("开始播放")
+	--startMediaPlayer(SCRIPTELF_SOUND_1)
+	--startMediaPlayer(SCRIPTELF_SOUND_2)
+	--startMediaPlayer(SCRIPTELF_SOUND_3)
 end
 
-function 土司(text)
-提示(text)
+function pause()
+if UI~=nil then
+toast("暂停播放"..UI)
+	pauseMediaPlayer()
+else
+toast("你还没有播放过音乐")
+end
 end
 
-
-
+function stop()
+--UI_path = getText(DEFAULT_WINDOW_NAME,"UI_path")
+if UI~=nil then
+toast("停止播放"..UI)
+	pauseMediaPlayer()
+else
+toast("你还没有播放过音乐")
+end
+end
 
 function createUI()
 	showLoopSetting(false)
 local html=[[ <!DOCTYPE HTML>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>脚本精灵远程封装函数</title>
+<title>远程音乐脚本</title>
 </head>
 <body>
 <html>
@@ -60,6 +81,20 @@ return i
 createWebView("HTML",html)
 newLine(windowName)
 
+	createTextView("UIuu","文件路径")
+	--createEditText("UI_path","/sdcard/burning.mp3",EDIT_TYPE_NUMBER,MATCH_PARENT,WRAP_CONTENT)
+	createEditText("U",getSDCardPath().."/ScriptElf/runtime/assets/滑雪大冒险.mp3",0,MATCH_PARENT,WRAP_CONTENT)
+	newLine()
+newLine(windowName)
+	createButton("UIplay","播放","play")
+	createTextView("UI_tv1","  ",WRAP_CONTENT,WRAP_CONTENT)
+	createButton("UIpause","暂停","pause")
+	createTextView("UI_tv2","  ",WRAP_CONTENT,WRAP_CONTENT)
+	createButton("UIstop","停止","stop")
+	
+
+
+
 end
 
 function main()
@@ -71,5 +106,3 @@ end
 if getScriptElfVersion() < 200 then
    main()
 end
-
-
